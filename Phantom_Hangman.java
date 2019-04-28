@@ -20,10 +20,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.BorderFactory;
 
-/**
- * Displays a Hangman game board to the screen for interaction with the player.
- * @author Jeff A.
- */
 class Phantom_Hangman 
 {
     public static void main(String[] args) 
@@ -137,7 +133,7 @@ class Phantom_Hangman
         setTitle("Phantom Hangman");
         setSize(WIDTH, HEIGHT);
         setResizable(false);
-        addCloseWindowListener();
+        
         
         initialize();
     }
@@ -168,30 +164,7 @@ class Phantom_Hangman
         setVisible(true);
     }
     
-    /**
-     * Prompts the user to confirm before quitting out of the window.
-     */
-    private void addCloseWindowListener()
-    {
-        // NOTE: Must be DO_NOTHING_ON_CLOSE for prompt to function correctly
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        
-        addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent we)
-            {
-                int prompt = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to quit?",
-                        "Quit?", 
-                        JOptionPane.YES_NO_OPTION);
-                
-                if (prompt == JOptionPane.YES_OPTION)
-                    System.exit(0);
-            }
-        });
-    }
-    
+
     /**
      * Adds the correct and incorrect labels to the top of the GameBoard
      */
@@ -205,6 +178,13 @@ class Phantom_Hangman
         //     "visually agreeable" locations
         add(textPanel, BorderLayout.NORTH);
     }
+
+
+
+
+
+
+
     
     /**
      * Adds the LetterRack to the bottom of the GameBoard and attaches
@@ -219,6 +199,9 @@ class Phantom_Hangman
         add(gameRack, BorderLayout.SOUTH);
     }
     
+
+
+
     /**
      * Adds a panel that contains the hangman images to the middle of the
      * GameBoard.
@@ -232,62 +215,32 @@ class Phantom_Hangman
         hangmanPanel.add(gameHangman);
         add(hangmanPanel, BorderLayout.CENTER);
     }
+
+
+
+
+
+
     
     /**
      * Retrieves the password from the player, constrained by the length and
      * content of the password.
      */
+
     private void getPassword()
     {
-        String[] options = {"Let's Play", "Quit"};
-        JPanel passwordPanel = new JPanel();
-        JLabel passwordLabel = new JLabel("Enter Password to Be Guessed: ");
-        JTextField passwordText = new JTextField(MAX_PASSWORD_LENGTH);
-        passwordPanel.add(passwordLabel);
-        passwordPanel.add(passwordText);
-        int confirm = -1;
-        
-        while (password.isEmpty())
-        {
-            confirm = JOptionPane.showOptionDialog(null, 
-                    passwordPanel, 
-                    "Enter Password", 
-                    JOptionPane.DEFAULT_OPTION, 
-                    JOptionPane.QUESTION_MESSAGE, 
-                    null, 
-                    options, 
-                    options[0]);
 
-            if (confirm == 0)
-            {
-                password = passwordText.getText();
-                
-                // ensure password is only made up of letters and is less than
-                //     the maximum password length
-                // NOTE: matches() (and its use of regular expressions) is used
-                //     for simplicity, not speed
-                if (!password.matches("[a-zA-Z]+") || 
-                    password.length() > MAX_PASSWORD_LENGTH)
-                {
-                    JOptionPane.showMessageDialog(null, 
-                            "Password must be less than 10 characters and " +
-                            "only contain letters A-Z.", 
-                            "Invalid Password", 
-                            JOptionPane.ERROR_MESSAGE);
-                    password = ""; // empty password if error occurs
-                }
-            }
-                    
-            else if (confirm == 1)
-                System.exit(0);
-        }
-        
-        // use a regular expression to replace all characters with *'s and
-        //     hide the password when it is displayed
+                password = "abc";
+
         passwordHidden.append(password.replaceAll(".", "*"));
         correct.setText(correct.getText() + passwordHidden.toString());
     }
     
+
+
+
+
+
     /**
      * Prompts the user for a new game when one game ends.
      */
@@ -303,7 +256,12 @@ class Phantom_Hangman
         else
             System.exit(0);
     }
-    
+
+
+
+
+
+   
     /**
      * A custom MouseListener for the LetterTiles that detects when the user
      * "guesses" (clicks on) a LetterTile and updates the game accordingly.
@@ -382,6 +340,10 @@ class Phantom_Hangman
         public void mouseExited(MouseEvent e) {}
     }
 }
+
+
+
+
 
  class LetterTile extends JLabel
 {
@@ -526,6 +488,11 @@ class Phantom_Hangman
     }
 }
 
+
+
+
+
+
 class LetterRack extends JPanel
 {
     /**
@@ -576,6 +543,11 @@ class LetterRack extends JPanel
         this("password", "images/", ".png");
     }
     
+
+
+
+
+
     /**
      * Creates a new LetterRack given the password to be guessed, letter image
      * directory, and letter image type
@@ -614,6 +586,11 @@ class LetterRack extends JPanel
             add(tile);
     }
     
+
+
+
+
+
     /**
      * Builds a letter rack from a blend of the password and random letters.
      */
