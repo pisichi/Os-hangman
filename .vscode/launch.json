@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - hm_os",
+            "request": "launch",
+            "mainClass": "hm_os",
+            "projectName": "Os-hangman_b7083ce8"
+        }
+    ]
+}
