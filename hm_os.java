@@ -117,6 +117,9 @@ class hm_os
         
         setTitle("Phantom Hangman");
         setSize(500, 500);
+
+        
+
         
         
         
@@ -170,7 +173,7 @@ class hm_os
         //setLayout(new BorderLayout());
         ImageIcon img = new ImageIcon("bg.png");
         background = new JLabel("",img,JLabel.CENTER);
-        background.setBounds(0,0,500,500);
+        background.setBounds(0,0,200,200);
         add(background,BorderLayout.CENTER);
         //background.setLayout(new FlowLayout());
   
