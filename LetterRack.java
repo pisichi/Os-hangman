@@ -70,8 +70,8 @@ class LetterRack extends JPanel
     public LetterRack(String inPassword, String imageDirectory, 
             String imageType)
     {
-        RACK_COLS = 8;
-        RACK_ROWS = 2;
+        RACK_COLS = 5;
+        RACK_ROWS = 3;
         LETTER_RACK_LAYOUT = new GridLayout(RACK_ROWS, RACK_COLS);
         LETTER_RACK_LAYOUT.setVgap(20);
         CAPACITY = RACK_ROWS * RACK_COLS;

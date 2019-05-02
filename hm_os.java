@@ -116,7 +116,7 @@ class hm_os
         HANGMAN_IMAGE_BASE_NAME = "hangman";
         
         setTitle("Phantom Hangman");
-        setSize(500, 500);
+        setSize(500, 600);
 
         
 
