@@ -5,6 +5,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
+import java.util.Random; 
+
 
 public class MultiThreadServer {
     public static void main(String[] args) {
@@ -13,6 +16,7 @@ public class MultiThreadServer {
         try {
             server = new ServerSocket(32000);
             server.setReuseAddress(true);
+
             // The main thread is just accepting new connections
             while (true) {
                 Socket client = server.accept();
@@ -47,13 +51,34 @@ public class MultiThreadServer {
         public void run() {
             PrintWriter out = null;
             BufferedReader in = null;
+			            Scanner scanner = new Scanner(System.in);
+
             try {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 String line;
-                while ((line = in.readLine()) != null) {
+				String[] movie = new String[3];
+
+					movie[0] = "123";
+					movie[1] = "456";
+					movie[2] = "totototo";
+
+				    Random rand = new Random(); 
+
+
+				while (true) {
+			    int r = rand.nextInt(3);
+                String ans = movie[r];
+                out.println(ans);
+                out.flush();
+
+                    line = in.readLine();
                     System.out.printf("Sent from the client: %s\n", line);
-                    out.println(line);
+
+					
+                   try {
+						Thread.sleep((1000));
+						} catch (InterruptedException e) {}
                 }
             } catch (IOException e) {
                 e.printStackTrace();

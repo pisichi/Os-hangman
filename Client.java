@@ -17,12 +17,30 @@ public class Client {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Scanner scanner = new Scanner(System.in);
-            String line = null;
-            while (!"exit".equalsIgnoreCase(line)) {
-                line = scanner.nextLine();
-                out.println(line);
-                out.flush();
-                System.out.println("Server replied " + in.readLine());
+			String movie  = null;
+
+
+
+            while (!"exit".equalsIgnoreCase(movie)) {
+
+				
+			   String ans = in.readLine();
+
+
+
+                
+				if (ans.length() > 5)
+				{out.println("win");
+				}
+
+
+				else {
+				out.println("lose");
+				}
+				
+                
+                System.out.println("Server replied " + ans);
+				
             }
             scanner.close();
         } catch (IOException e) {
