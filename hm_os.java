@@ -190,7 +190,7 @@ class hm_os
         
         
         getPassword();
-        addBackground();
+        //addBackground();
         addTextPanel();
         addLetterRack();
         addHangman();
