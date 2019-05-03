@@ -27,13 +27,13 @@ public class MultiThreadServer {
                 new Thread(clientSock).start();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         } finally {
             if (server != null) {
                 try {
                     server.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
         }
@@ -59,8 +59,8 @@ public class MultiThreadServer {
                 String line;
 				String[] movie = new String[3];
 
-					movie[0] = "123";
-					movie[1] = "456";
+					movie[0] = "oasdkoasd";
+					movie[1] = "asdasd";
 					movie[2] = "totototo";
 
 				    Random rand = new Random(); 
@@ -73,15 +73,13 @@ public class MultiThreadServer {
                 out.flush();
 
                     line = in.readLine();
+					if(line!=null)
                     System.out.printf("Sent from the client: %s\n", line);
 
 					
-                   try {
-						Thread.sleep((1000));
-						} catch (InterruptedException e) {}
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             } finally {
                 try {
                     if (out != null) {
@@ -91,7 +89,7 @@ public class MultiThreadServer {
                         in.close();
                     clientSocket.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
         }

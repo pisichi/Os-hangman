@@ -15,11 +15,51 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
+
 class hm_os 
 {
     public static void main(String[] args) 
-    {
-        GameBoard hm_os = new GameBoard();
+    {  
+      ///////////////////////////client part
+
+	  String host = "127.0.0.1";
+      int port = 32000;
+
+	  try (Socket socket = new Socket(host, port)) {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			 String ans = in.readLine();
+
+             GameBoard.movie = ans;
+             System.out.println("Server replied " + ans);
+			
+			 GameBoard hm_os = new GameBoard();
+
+			 while(GameBoard.check == 0){
+				 System.out.print(""); // oh god why
+			 }
+
+			 if (GameBoard.check == 1){out.println("win");out.flush();}
+
+			 else if (GameBoard.check == 2){out.println("lose");out.flush();}
+
+			 
+             
+				
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+
+
+
+       
     }
 }
 
@@ -92,6 +132,10 @@ class hm_os
      * The password to be guessed by the player.
      */
      String password;
+
+	 static String movie;
+
+	 static int check = 0;
     
     /**
      * StringBuilder used to hide the password, revealing letters as they are
@@ -102,6 +146,10 @@ class hm_os
     /**
      * The default constructor.
      */
+
+   
+
+
     public GameBoard()
     {
 
@@ -142,7 +190,7 @@ class hm_os
         
         
         getPassword();
-        //addBackground();
+        addBackground();
         addTextPanel();
         addLetterRack();
         addHangman();
@@ -170,7 +218,7 @@ class hm_os
 
     void addBackground()
     {
-        //setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
         ImageIcon img = new ImageIcon("bg.png");
         background = new JLabel("",img,JLabel.CENTER);
         background.setBounds(0,0,200,200);
@@ -221,10 +269,10 @@ class hm_os
 
 
     
-    private void getPassword()
-    {
-
-                password = "abc";
+    public void getPassword()
+    {  
+        
+	    password = movie;
 
         passwordHidden.append(password.replaceAll(".", "*"));
         correct.setText(correct.getText() + passwordHidden.toString());
@@ -269,7 +317,9 @@ class hm_os
                     if (passwordHidden.toString().equals(password))
                     {
                         gameRack.removeListeners();
-                        gameHangman.winImage();
+                        gameHangman.winImage();	 
+                        check = 1;
+						System.out.print("win");
                     
                     }
                 }
@@ -280,9 +330,13 @@ class hm_os
                     incorrect.setText("Incorrect: " + ++numIncorrect);
                     
                     if (numIncorrect >= MAX_INCORRECT)
-                    {
+                    {   
+						check = 2;
                         gameHangman.loseImage();
                         gameRack.removeListeners();
+						System.out.print("lose");
+						
+
                     }
                     
                     else
