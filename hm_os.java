@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,12 +23,15 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+import java.awt.Font;
+import javax.swing.JApplet;
+
 class hm_os 
 {
     public static void main(String[] args) 
     {  
-      ///////////////////////////client part
-
+     
+      
 	  String host = "127.0.0.1";
       int port = 32000;
 
@@ -35,11 +39,13 @@ class hm_os
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			 String ans = in.readLine();
-
+             
              GameBoard.movie = ans;
              System.out.println("Server replied " + ans);
 			
 			 GameBoard hm_os = new GameBoard();
+
+		
 
 			 while(GameBoard.check == 0){
 				 System.out.print(""); // oh god why
@@ -50,13 +56,16 @@ class hm_os
 			 else if (GameBoard.check == 2){out.println("lose");out.flush();}
 
 			 
+
+			 
              
 				
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
 
+	  
+        
 
 
        
@@ -66,86 +75,42 @@ class hm_os
  class GameBoard extends JFrame 
 {
 
-    /**
-     * The maximum number of guesses before game over.
-     */
+
      final int MAX_INCORRECT;
     
+     final String HANGMAN_IMAGE_DIRECTORY;
     
-    /**
-     * The directory of the images of the hangman.
-     */
-    final String HANGMAN_IMAGE_DIRECTORY;
-    
-    /**
-     * The type of the images of the hangman.
-     */
      final String HANGMAN_IMAGE_TYPE;
+
+     final String HANGMAN_IMAGE_BASE_NAME;
     
-    /**
-     * The base (common) name of the images of the hangman (e.g. "hangman" for
-     * "hangman_0.png, hangman_1.png, ...")
-     */
-    final String HANGMAN_IMAGE_BASE_NAME;
-    
-    /**
-     * The directory of the images of the letters.
-     */
      final String LETTER_IMAGE_DIRECTORY;
     
-    /**
-     * The type of the images of the letters.
-     */
      final String LETTER_IMAGE_TYPE;
-    
-    /**
-     * The letter rack containing a the letters to be guessed.
-     */
+
      LetterRack gameRack;
     
-    /**
-     * The hangman image placeholder.
-     */
      Hangman gameHangman;
     
-    /**
-     * The number of incorrect guesses.
-     */
      int numIncorrect;
     
-    /**
-     * Display the password hidden as *'s, revealing each letter as it is
-     * guessed
-     */
+
      JLabel correct;
     
-    /**
-     * Displays the number of incorrect guesses.
-     */
-     JLabel incorrect;
-
-
 
      JLabel background;
     
-    /**
-     * The password to be guessed by the player.
-     */
+
      String password;
 
 	 static String movie;
 
 	 static int check = 0;
+	 
     
-    /**
-     * StringBuilder used to hide the password, revealing letters as they are
-     * guessed by the player.
-     */
+
     private StringBuilder passwordHidden;
     
-    /**
-     * The default constructor.
-     */
 
    
 
@@ -154,17 +119,16 @@ class hm_os
     {
 
         MAX_INCORRECT = 6;
+		
 
         
-        // The default directory for the sample images is images/ and the 
-        //     default image type is .png; ensure this directory is
-        //     created in the project folder if the sample images are used.
         HANGMAN_IMAGE_DIRECTORY = LETTER_IMAGE_DIRECTORY = "images/";
         HANGMAN_IMAGE_TYPE = LETTER_IMAGE_TYPE = ".png";
         HANGMAN_IMAGE_BASE_NAME = "hangman";
         
-        setTitle("Phantom Hangman");
-        setSize(500, 600);
+        setTitle("OS_Hangman");
+		setLayout(new BorderLayout(5,5));
+        setSize(500, 650);
 
         
 
@@ -173,70 +137,49 @@ class hm_os
         
         initialize();
     }
-    
-    /**
-     * Initializes all elements of the GameBoard that must be refreshed upon
-     * the start of a new game.
-     */
+
     private void initialize()
     {   
-        
+        check = 0;
         numIncorrect = 0;
         
-        correct = new JLabel("Word: ");
-        incorrect = new JLabel("Incorrect: " + numIncorrect);
+        correct = new JLabel("Movie: ",SwingConstants.CENTER);
+		Font font = new Font("Courier", Font.BOLD,20);
+		correct.setFont(font);
+
         password = new String();
         passwordHidden = new StringBuilder();
         
         
         getPassword();
-        //addBackground();
+     
         addTextPanel();
         addLetterRack();
         addHangman();
+		
         
         
         setVisible(true);
     }
-    
 
-    /**
-     * Adds the correct and incorrect labels to the top of the GameBoard
-     */
+
+
+
+
     private void addTextPanel()
     {
         JPanel textPanel = new JPanel();
-        textPanel.setLayout(new GridLayout(1,2));
+        textPanel.setLayout(new GridLayout(1,1));
+		
         textPanel.add(correct);
-        //textPanel.add(incorrect);
-        // use BorderLayout to set the components of the gameboard in
-        //     "visually agreeable" locations
+
         add(textPanel, BorderLayout.NORTH);
         
     }
 
 
-    void addBackground()
-    {
-        setLayout(new BorderLayout());
-        ImageIcon img = new ImageIcon("bg.png");
-        background = new JLabel("",img,JLabel.CENTER);
-        background.setBounds(0,0,200,200);
-        add(background,BorderLayout.CENTER);
-        //background.setLayout(new FlowLayout());
-  
-    }
-    
 
 
-
-
-
-    
-    /**
-     * Adds the LetterRack to the bottom of the GameBoard and attaches
-     * the LetterTile TileListeners to the LetterTiles.
-     */
     private void addLetterRack()
     {
         gameRack = new LetterRack(password, 
@@ -249,10 +192,6 @@ class hm_os
 
 
 
-    /**
-     * Adds a panel that contains the hangman images to the middle of the
-     * GameBoard.
-     */
     private void addHangman()
     {
         JPanel hangmanPanel = new JPanel();
@@ -274,10 +213,12 @@ class hm_os
         
 	    password = movie;
 
+
         passwordHidden.append(password.replaceAll(".", "*"));
         correct.setText(correct.getText() + passwordHidden.toString());
     }
-    
+
+
 
 
 
@@ -295,24 +236,20 @@ class hm_os
                 int index = 0;
                 boolean updated = false;
                 
-                // cast the source of the click to a LetterTile object
+            
                 LetterTile tilePressed = (LetterTile) source;
                 c = tilePressed.guess();
-                
-                // reveal each instance of the character if it appears in the
-                //     the password
+
                 while ((index = password.toLowerCase().indexOf(c, index)) != -1)
                 {
                     passwordHidden.setCharAt(index, password.charAt(index));
                     index++;
                     updated = true;
                 }
-                
-                // if the guess was correct, update the GameBoard and check
-                //     for a win
+
                 if (updated)
                 {
-                    correct.setText("Word: " + passwordHidden.toString());
+                    correct.setText("Movie: " + passwordHidden.toString());
                     
                     if (passwordHidden.toString().equals(password))
                     {
@@ -320,22 +257,23 @@ class hm_os
                         gameHangman.winImage();	 
                         check = 1;
 						System.out.print("win");
+		
+						
                     
                     }
                 }
                 
-                // otherwise, add an incorrect guess and check for a loss
+              
                 else
                 {
-                    incorrect.setText("Incorrect: " + ++numIncorrect);
-                    
+                    ++numIncorrect;
+
                     if (numIncorrect >= MAX_INCORRECT)
                     {   
 						check = 2;
                         gameHangman.loseImage();
                         gameRack.removeListeners();
 						System.out.print("lose");
-						
 
                     }
                     

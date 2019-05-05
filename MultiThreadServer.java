@@ -57,17 +57,21 @@ public class MultiThreadServer {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 String line;
-				String[] movie = new String[3];
+				String[] movie = new String[7];
 
-					movie[0] = "oasdkoasd";
-					movie[1] = "asdasd";
-					movie[2] = "totototo";
+					movie[0] = "interstellar";
+					movie[1] = "jumanji";
+					movie[2] = "it";
+					movie[3] = "up";
+					movie[4] = "inception";
+					movie[5] = "scream";
+					movie[6] = "matrix";
 
 				    Random rand = new Random(); 
 
 
 				while (true) {
-			    int r = rand.nextInt(3);
+			    int r = rand.nextInt(7);
                 String ans = movie[r];
                 out.println(ans);
                 out.flush();
