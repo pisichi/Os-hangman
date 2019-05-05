@@ -54,20 +54,10 @@ class hm_os
 			 if (GameBoard.check == 1){out.println("win");out.flush();}
 
 			 else if (GameBoard.check == 2){out.println("lose");out.flush();}
-
-			 
-
-			 
-             
 				
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-	  
-        
-
-
        
     }
 }
@@ -76,7 +66,7 @@ class hm_os
 {
 
 
-     final int MAX_INCORRECT;
+final int MAX_INCORRECT;
     
      final String HANGMAN_IMAGE_DIRECTORY;
     
@@ -110,30 +100,20 @@ class hm_os
     
 
     private StringBuilder passwordHidden;
-    
-
-   
 
 
     public GameBoard()
     {
 
         MAX_INCORRECT = 6;
-		
-
-        
+		      
         HANGMAN_IMAGE_DIRECTORY = LETTER_IMAGE_DIRECTORY = "images/";
         HANGMAN_IMAGE_TYPE = LETTER_IMAGE_TYPE = ".png";
         HANGMAN_IMAGE_BASE_NAME = "hangman";
         
         setTitle("OS_Hangman");
 		setLayout(new BorderLayout(5,5));
-        setSize(500, 650);
-
-        
-
-        
-        
+        setSize(500, 650);    
         
         initialize();
     }
@@ -152,13 +132,13 @@ class hm_os
         
         
         getPassword();
-     
+		addBackground();
         addTextPanel();
-        addLetterRack();
         addHangman();
+		addLetterRack();
 		
         
-        
+        setResizable(false);
         setVisible(true);
     }
 
@@ -191,7 +171,6 @@ class hm_os
     
 
 
-
     private void addHangman()
     {
         JPanel hangmanPanel = new JPanel();
@@ -202,11 +181,17 @@ class hm_os
         add(hangmanPanel, BorderLayout.CENTER);
     }
 
-
-
-
-
-
+	void addBackground()
+    {
+        setLayout(new BorderLayout());
+        ImageIcon img = new ImageIcon("bg.png");
+        background = new JLabel("",img,JLabel.CENTER);
+        background.setBounds(0,0,200,200);
+        //add(background,BorderLayout.CENTER);
+		setContentPane(background);
+        background.setLayout(new FlowLayout());
+  
+    }
     
     public void getPassword()
     {  
@@ -217,11 +202,6 @@ class hm_os
         passwordHidden.append(password.replaceAll(".", "*"));
         correct.setText(correct.getText() + passwordHidden.toString());
     }
-
-
-
-
-
 
 
     class TileListener implements MouseListener 
