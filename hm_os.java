@@ -132,7 +132,7 @@ final int MAX_INCORRECT;
         
         
         getPassword();
-		addBackground();
+		//addBackground();
         addTextPanel();
         addHangman();
 		addLetterRack();
